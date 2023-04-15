@@ -5,7 +5,7 @@ type ColorTheme = "lightTheme" | "darkTheme";
 type DocumentType = {
   title: string;
   content: string;
-  date: object;
+  date: string;
 };
 
 export type { ColorTheme, DocumentType };
