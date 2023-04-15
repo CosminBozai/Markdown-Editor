@@ -1,21 +1,24 @@
-import { render, renderHook, screen } from "@testing-library/react";
-import { beforeEach, it, describe, expect } from "vitest";
+import { render } from "@testing-library/react";
+import { it, describe, expect, vi } from "vitest";
 import App from "../App";
-import "vitest-localstorage-mock";
+import * as exports from "../utils/documents";
+import { act } from "react-dom/test-utils";
+import { DocumentType } from "../utils/types";
 
-describe("Color theme", () => {
-  beforeEach(() => window.localStorage.clear());
+const mockReturn = new Promise<DocumentType[]>((resolve, reject) => {
+  setTimeout(() => {
+    resolve([]);
+  }, 300);
+});
 
-  it("should render with light theme when there is no saved theme", () => {
-    render(<App />);
-    const appElement = screen.getByTestId("app-element");
-    expect(appElement).toHaveClass("lightTheme");
-  });
+vi.spyOn(exports, "getDocuments").mockReturnValue(mockReturn);
 
-  it("should render with dark theme when dark theme is saved", () => {
-    window.localStorage.setItem("colorTheme", "darkTheme");
-    render(<App />);
-    const appElement = screen.getByTestId("app-element");
-    expect(appElement).toHaveClass("darkTheme");
+describe("App", () => {
+  it("should call getDocuments", async () => {
+    await act(async () => {
+      render(<App />);
+    });
+
+    expect(exports.getDocuments).toHaveBeenCalledTimes(1);
   });
 });

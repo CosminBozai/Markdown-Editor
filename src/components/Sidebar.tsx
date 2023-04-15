@@ -3,21 +3,22 @@ import { ReactComponent as LightIcon } from "../assets/icon-light-mode.svg";
 import { ColorTheme, DocumentType } from "../utils/types";
 import Document from "./Document";
 import "../styles/Sidebar.scss";
+import useTheme from "../hooks/useTheme";
 
 type Props = {
-  colorTheme: ColorTheme;
-  toggleTheme: () => void;
   show: boolean;
   documents: DocumentType[];
 };
 
-function Sidebar({ colorTheme, toggleTheme, show, documents }: Props) {
+function Sidebar({ show, documents }: Props) {
+  const { colorTheme, toggleTheme } = useTheme();
+
   const documentsList = documents.map((doc, i) => (
     <Document key={i} date={doc.date} title={doc.title} />
   ));
 
   return (
-    <div className={`sidebar ${show ? "show" : ""}`}>
+    <div className={`sidebar ${colorTheme} ${show ? "show" : ""}`}>
       <h1>MARKDOWN</h1>
       <p className="my-documents">MY DOCUMENTS</p>
       <button className="new-doc-btn">+ New Document</button>
