@@ -8,14 +8,38 @@ import useTheme from "../hooks/useTheme";
 type Props = {
   show: boolean;
   documents: DocumentType[];
+  activeDoc: string | null;
+  setActiveDoc: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-function Sidebar({ show, documents }: Props) {
+function Sidebar({ show, documents, activeDoc, setActiveDoc }: Props) {
   const { colorTheme, toggleTheme } = useTheme();
 
-  const documentsList = documents.map((doc) => (
-    <Document key={doc.id} date={doc.date} title={doc.title} />
-  ));
+  const documentsList = documents.map((doc) => {
+    if (activeDoc === doc.id) {
+      return (
+        <Document
+          key={doc.id}
+          id={doc.id}
+          date={doc.date}
+          title={doc.title}
+          setActiveDoc={setActiveDoc}
+          active={true}
+        />
+      );
+    } else {
+      return (
+        <Document
+          key={doc.id}
+          id={doc.id}
+          date={doc.date}
+          title={doc.title}
+          setActiveDoc={setActiveDoc}
+          active={false}
+        />
+      );
+    }
+  });
 
   return (
     <div
