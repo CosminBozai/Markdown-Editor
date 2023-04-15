@@ -18,7 +18,10 @@ function Sidebar({ show, documents }: Props) {
   ));
 
   return (
-    <div className={`sidebar ${colorTheme} ${show ? "show" : ""}`}>
+    <div
+      className={`sidebar ${colorTheme} ${show ? "show" : ""}`}
+      data-testid="sidebar"
+    >
       <h1>MARKDOWN</h1>
       <p className="my-documents">MY DOCUMENTS</p>
       <button className="new-doc-btn">+ New Document</button>
