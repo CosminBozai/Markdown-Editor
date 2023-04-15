@@ -8,6 +8,7 @@ const getDocuments = async () => {
     const querySnapshot = await getDocs(collection(db, "documents"));
     querySnapshot.forEach((doc) => {
       const data = doc.data();
+      data.id = doc.id;
       data.date = data.date
         .toDate()
         .toLocaleDateString("en-GB", {

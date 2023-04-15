@@ -13,8 +13,8 @@ type Props = {
 function Sidebar({ show, documents }: Props) {
   const { colorTheme, toggleTheme } = useTheme();
 
-  const documentsList = documents.map((doc, i) => (
-    <Document key={i} date={doc.date} title={doc.title} />
+  const documentsList = documents.map((doc) => (
+    <Document key={doc.id} date={doc.date} title={doc.title} />
   ));
 
   return (
