@@ -1,6 +1,6 @@
 import { ReactComponent as DarkIcon } from "../assets/icon-dark-mode.svg";
 import { ReactComponent as LightIcon } from "../assets/icon-light-mode.svg";
-import { ColorTheme, DocumentType } from "../utils/types";
+import { DocumentType } from "../utils/types";
 import Document from "./Document";
 import "../styles/Sidebar.scss";
 import useTheme from "../hooks/useTheme";
@@ -22,7 +22,7 @@ function Sidebar({ show, documents }: Props) {
       <h1>MARKDOWN</h1>
       <p className="my-documents">MY DOCUMENTS</p>
       <button className="new-doc-btn">+ New Document</button>
-      <ul>{documentsList}</ul>
+      <ul className="document-list">{documentsList}</ul>
       <div className="theme-toggle-container">
         <DarkIcon
           fill={colorTheme === "darkTheme" ? "white" : "#7c8187"}
