@@ -4,7 +4,8 @@ import { AiOutlineCheck } from "react-icons/ai";
 import "../styles/Document.scss";
 import React, { useState } from "react";
 import { editDocTitle, getDocuments } from "../utils/documents";
-import { DocumentType } from "../utils/types";
+import { documentsAtom } from "../App";
+import { useAtom } from "jotai/react";
 
 type Props = {
   date: string;
@@ -12,19 +13,12 @@ type Props = {
   active: boolean;
   id: string;
   setActiveDoc: React.Dispatch<React.SetStateAction<string | null>>;
-  setDocuments: React.Dispatch<React.SetStateAction<DocumentType[]>>;
 };
 
-function Document({
-  date,
-  title,
-  active,
-  id,
-  setActiveDoc,
-  setDocuments,
-}: Props) {
+function Document({ date, title, active, id, setActiveDoc }: Props) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
+  const [, setDocuments] = useAtom(documentsAtom);
 
   const handleSave = async () => {
     if (newTitle !== title) {

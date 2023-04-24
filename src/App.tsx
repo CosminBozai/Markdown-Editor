@@ -3,13 +3,14 @@ import { useEffect, useState } from "react";
 import { DocumentType } from "./utils/types";
 import { getDocuments } from "./utils/documents";
 import "./styles/App.scss";
+import { atom, useAtom } from "jotai";
 // import "./styles/colorThemes.scss";
 
-//TODO logic for adding documents
+export const documentsAtom = atom<DocumentType[]>([]);
 
 function App() {
   const [showSidebar, setShowSidebar] = useState<boolean>(false);
-  const [documents, setDocuments] = useState<DocumentType[]>([]);
+  const [documents, setDocuments] = useAtom(documentsAtom);
   const [activeDoc, setActiveDoc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,7 +24,6 @@ function App() {
         documents={documents}
         activeDoc={activeDoc}
         setActiveDoc={setActiveDoc}
-        setDocuments={setDocuments}
       />
       <div className="components-wrapper">
         <button onClick={() => setShowSidebar(!showSidebar)}>

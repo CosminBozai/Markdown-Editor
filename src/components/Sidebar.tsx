@@ -13,16 +13,9 @@ type Props = {
   documents: DocumentType[];
   activeDoc: string | null;
   setActiveDoc: React.Dispatch<React.SetStateAction<string | null>>;
-  setDocuments: React.Dispatch<React.SetStateAction<DocumentType[]>>;
 };
 
-function Sidebar({
-  show,
-  documents,
-  activeDoc,
-  setActiveDoc,
-  setDocuments,
-}: Props) {
+function Sidebar({ show, documents, activeDoc, setActiveDoc }: Props) {
   const [showOverlay, setShowOverlay] = useState(false);
   const closeOverlay = () => setShowOverlay(false);
 
@@ -38,7 +31,6 @@ function Sidebar({
           title={doc.title}
           setActiveDoc={setActiveDoc}
           active={true}
-          setDocuments={setDocuments}
         />
       );
     } else {
@@ -50,7 +42,6 @@ function Sidebar({
           title={doc.title}
           setActiveDoc={setActiveDoc}
           active={false}
-          setDocuments={setDocuments}
         />
       );
     }

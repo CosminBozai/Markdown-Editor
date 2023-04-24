@@ -3,6 +3,10 @@ import createFile from "../utils/createFile";
 import { CreatedDocument } from "../utils/types";
 import { addNewDocument } from "../utils/documents";
 import "../styles/NewDocModal.scss";
+import { Timestamp } from "firebase/firestore";
+import { getDocuments } from "../utils/documents";
+import { documentsAtom } from "../App";
+import { useAtom } from "jotai";
 
 type Props = {
   onClose: () => void;
@@ -10,6 +14,7 @@ type Props = {
 
 function NewDocModal({ onClose }: Props) {
   const [newFile, setNewFile] = useState<CreatedDocument>();
+  const [, setDocuments] = useAtom(documentsAtom);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,13 +29,30 @@ function NewDocModal({ onClose }: Props) {
     if (newFile) {
       await addNewDocument(newFile);
     }
+
+    await getDocuments().then((documents) => setDocuments(documents));
+
+    onClose();
+  };
+
+  const handleClick = async () => {
+    await addNewDocument({
+      title: "New Document",
+      date: Timestamp.now(),
+      content: "",
+    });
+
+    await getDocuments().then((documents) => setDocuments(documents));
+
     onClose();
   };
 
   return (
     <div className="new-doc-modal-container">
       <p>Add new document</p>
-      <button className="modal-btn">Create new document</button>
+      <button className="modal-btn" onClick={handleClick}>
+        Create new document
+      </button>
       <span>or add an existing document</span>
       <div className="file-wrapper">
         <input
