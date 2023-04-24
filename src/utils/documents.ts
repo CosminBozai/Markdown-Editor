@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { DocumentType } from "./types";
 
@@ -27,4 +27,15 @@ const getDocuments = async () => {
   }
 };
 
-export { getDocuments };
+const editDocTitle = async (id: string, newTitle: string) => {
+  try {
+    const ref = doc(db, "documents", id);
+    await updateDoc(ref, {
+      title: newTitle,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getDocuments, editDocTitle };

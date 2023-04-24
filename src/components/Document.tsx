@@ -1,5 +1,9 @@
 import { ReactComponent as FileIcon } from "../assets/icon-document.svg";
+import { MdEdit } from "react-icons/md";
+import { AiOutlineCheck } from "react-icons/ai";
 import "../styles/Document.scss";
+import React, { useState } from "react";
+import { editDocTitle } from "../utils/documents";
 
 type Props = {
   date: string;
@@ -10,6 +14,35 @@ type Props = {
 };
 
 function Document({ date, title, active, id, setActiveDoc }: Props) {
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
+
+  const handleSave = async () => {
+    if (newTitle !== title) await editDocTitle(id, newTitle);
+    setEditingTitle(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setNewTitle(target.value);
+  };
+
+  const button = editingTitle ? (
+    <button className="doc-btn">
+      <AiOutlineCheck className="save-icon" onClick={handleSave} />
+    </button>
+  ) : (
+    <button className="doc-btn" onClick={() => setEditingTitle(true)}>
+      <MdEdit className="edit-icon" />
+    </button>
+  );
+
+  const inputOrTitle = editingTitle ? (
+    <input value={newTitle} className="doc-input" onChange={handleChange} />
+  ) : (
+    <p className="doc-title">{title}</p>
+  );
+
   return (
     <li
       className={`document-wrapper ${active && "active"}`}
@@ -18,8 +51,9 @@ function Document({ date, title, active, id, setActiveDoc }: Props) {
       <FileIcon className="file-icon" />
       <div className="doc-details">
         <p className="doc-date">{date}</p>
-        <p className="doc-title">{title}</p>
+        {inputOrTitle}
       </div>
+      {button}
     </li>
   );
 }
