@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { DocumentType } from "./utils/types";
 import { getDocuments } from "./utils/documents";
 import "./styles/App.scss";
-import "./styles/colorThemes.scss";
+// import "./styles/colorThemes.scss";
 
 //TODO logic for adding documents
 

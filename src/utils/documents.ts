@@ -1,6 +1,13 @@
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { DocumentType } from "./types";
+import { CreatedDocument, DocumentType } from "./types";
 
 const getDocuments = async () => {
   try {
@@ -38,4 +45,16 @@ const editDocTitle = async (id: string, newTitle: string) => {
   }
 };
 
-export { getDocuments, editDocTitle };
+const addNewDocument = async (document: CreatedDocument) => {
+  try {
+    await addDoc(collection(db, "documents"), {
+      title: document.title,
+      date: document.date,
+      content: document.content,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getDocuments, editDocTitle, addNewDocument };

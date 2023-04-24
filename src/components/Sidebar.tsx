@@ -6,6 +6,7 @@ import Document from "./Document";
 import useTheme from "../hooks/useTheme";
 import Overlay from "./Overlay";
 import "../styles/Sidebar.scss";
+import NewDocModal from "./NewDocModal";
 
 type Props = {
   show: boolean;
@@ -87,7 +88,12 @@ function Sidebar({
           />
         </div>
       </div>
-      {showOverlay && <Overlay onClose={closeOverlay} />}
+      {showOverlay && (
+        <Overlay
+          onClose={closeOverlay}
+          children={<NewDocModal onClose={closeOverlay} />}
+        />
+      )}
     </>
   );
 }
