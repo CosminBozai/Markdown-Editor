@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ReactComponent as DarkIcon } from "../assets/icon-dark-mode.svg";
 import { ReactComponent as LightIcon } from "../assets/icon-light-mode.svg";
-import { DocumentType } from "../utils/types";
+import { ColorTheme, DocumentType } from "../utils/types";
 import Document from "./Document";
 import useTheme from "../hooks/useTheme";
 import Overlay from "./Overlay";
@@ -13,13 +13,20 @@ type Props = {
   documents: DocumentType[];
   activeDoc: string | null;
   setActiveDoc: React.Dispatch<React.SetStateAction<string | null>>;
+  colorTheme: ColorTheme;
+  toggleTheme: () => void;
 };
 
-function Sidebar({ show, documents, activeDoc, setActiveDoc }: Props) {
+function Sidebar({
+  show,
+  documents,
+  activeDoc,
+  setActiveDoc,
+  colorTheme,
+  toggleTheme,
+}: Props) {
   const [showOverlay, setShowOverlay] = useState(false);
   const closeOverlay = () => setShowOverlay(false);
-
-  const { colorTheme, toggleTheme } = useTheme();
 
   const documentsList = documents.map((doc) => {
     if (activeDoc === doc.id) {
@@ -49,10 +56,7 @@ function Sidebar({ show, documents, activeDoc, setActiveDoc }: Props) {
 
   return (
     <>
-      <div
-        className={`sidebar ${colorTheme} ${show ? "show" : ""}`}
-        data-testid="sidebar"
-      >
+      <div className={`sidebar  ${show ? "show" : ""}`} data-testid="sidebar">
         <h1>MARKDOWN</h1>
         <p className="my-documents">MY DOCUMENTS</p>
         <button className="new-doc-btn" onClick={() => setShowOverlay(true)}>

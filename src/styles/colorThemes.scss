@@ -1,0 +1,19 @@
+@import "./colors";
+
+.lightTheme {
+  // New document modal
+  .new-doc-modal-container {
+    background-color: white;
+    p {
+      color: $black-700;
+    }
+  }
+}
+
+.darkTheme {
+  // New document modal
+  .new-doc-modal-container {
+    color: white;
+    background-color: $black-800;
+  }
+}
