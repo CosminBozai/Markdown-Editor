@@ -28,8 +28,8 @@ function Document({ date, title, active, id, setActiveDoc }: Props) {
   };
 
   const button = editingTitle ? (
-    <button className="doc-btn">
-      <AiOutlineCheck className="save-icon" onClick={handleSave} />
+    <button className="doc-btn" onClick={handleSave}>
+      <AiOutlineCheck className="save-icon" />
     </button>
   ) : (
     <button className="doc-btn" onClick={() => setEditingTitle(true)}>
