@@ -3,7 +3,8 @@ import { MdEdit } from "react-icons/md";
 import { AiOutlineCheck } from "react-icons/ai";
 import "../styles/Document.scss";
 import React, { useState } from "react";
-import { editDocTitle } from "../utils/documents";
+import { editDocTitle, getDocuments } from "../utils/documents";
+import { DocumentType } from "../utils/types";
 
 type Props = {
   date: string;
@@ -11,14 +12,25 @@ type Props = {
   active: boolean;
   id: string;
   setActiveDoc: React.Dispatch<React.SetStateAction<string | null>>;
+  setDocuments: React.Dispatch<React.SetStateAction<DocumentType[]>>;
 };
 
-function Document({ date, title, active, id, setActiveDoc }: Props) {
+function Document({
+  date,
+  title,
+  active,
+  id,
+  setActiveDoc,
+  setDocuments,
+}: Props) {
   const [editingTitle, setEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
 
   const handleSave = async () => {
-    if (newTitle !== title) await editDocTitle(id, newTitle);
+    if (newTitle !== title) {
+      await editDocTitle(id, newTitle);
+      getDocuments().then((newDocs) => setDocuments(newDocs));
+    }
     setEditingTitle(false);
   };
 

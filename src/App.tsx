@@ -23,6 +23,7 @@ function App() {
         documents={documents}
         activeDoc={activeDoc}
         setActiveDoc={setActiveDoc}
+        setDocuments={setDocuments}
       />
       <div className="components-wrapper">
         <button onClick={() => setShowSidebar(!showSidebar)}>
